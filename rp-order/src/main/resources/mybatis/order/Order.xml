@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rp.order.repository.OrderRepositoryImpl">
+	<insert id="insertOrder" parameterType="com.rp.order.model.Order">
+		INSERT INTO es_order (
+			ord_no,
+			mbr_id,
+			ord_tot_amt,
+			ord_stat_cd
+		) values (
+			#{ordNo},
+			#{mbrId},
+			#{ordTotAmt},
+			#{ordStatCd}
+		)
+	</insert>
+	
+	<update id="updateOrder" parameterType="com.rp.order.model.Order">
+		UPDATE es_order
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="mbrId != null">mbr_id = #{mbrId},</if>
+			<if test="ordTotAmt != null">ord_tot_amt = #{ordTotAmt},</if>
+			<if test="ordStatCd != null">ord_stat_cd = #{ordStatCd},</if>
+		</trim> 	
+		WHERE ord_no = #{ordNo}
+	</update>
+	
+	<select id="selectOrders" parameterType="com.rp.order.model.OrderParam" resultType="com.rp.order.model.Order">
+		SELECT 
+			ord_no as ordNo,
+			mbr_id as mbrId,
+			ord_tot_amt as ordTotAmt,
+			ord_stat_cd as ordStatCd
+		FROM es_order
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="mbrId != null">AND mbr_id = #{mbrId}</if>
+			<if test="ordStat != null">AND ord_stat_cd = #{ordStat.code}</if>
+			<if test="ordNoLike != null">AND ord_no LIKE CONCAT(#{ordNoLike},'%')</if>
+		</trim>
+		ORDER BY ord_no
+	</select>
+</mapper>

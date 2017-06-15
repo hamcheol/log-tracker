@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rp.order.repository.OrderProdRepositoryImpl">
+	<insert id="insertOrderProd" parameterType="com.rp.order.model.OrderProd">
+		INSERT INTO es_order_prod (
+			ord_no,
+			seq,
+			prod_nm,
+			prod_amt,
+			ord_prod_cnt,
+			purch_cfrm_dt,
+			seller_id
+		) values (
+			#{ordNo},
+			#{seq},
+			#{prodNm},
+			#{prodAmt},
+			#{ordProdCnt},
+			#{purchCfrmDt, jdbcType=VARCHAR},
+			#{sellerId}
+		)
+	</insert>
+	
+	<update id="updateOrderProd" parameterType="com.rp.order.model.OrderProd">
+		UPDATE es_order_prod
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="prodNm != null">
+			prod_nm = #{prodNm},
+			</if>
+			<if test="prodAmt != null">
+			prod_amt = #{prodAmt},
+			</if>
+			<if test="ordProdCnt != null">
+			ord_prod_cnt = #{ordProdCnt},
+			</if>
+			<if test="sellerId != null">
+			seller_id = #{sellerId},
+			</if>
+			<if test="purchCfrmDt != null">
+			purch_cfrm_dt = STR_TO_DATE(#{purchCfrmDt}, '%Y%m%d%H%i%s'),
+			</if>
+		</trim>
+		WHERE ord_no = #{ordNo}
+		<if test="seq != null">
+		AND seq = #{seq}
+		</if>
+	</update>
+</mapper>
