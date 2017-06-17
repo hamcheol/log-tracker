@@ -21,4 +21,20 @@
 			</if>
 		</trim>
 	</select>
+	
+	<insert id="insertMember" parameterType="com.rp.member.model.Member">
+		INSERT INTO rp_member (
+			mbr_id,
+			name,
+			addr,
+			sex,
+			birth
+		)values(
+			#{mbrId},
+			#{name},
+			#{addr},
+			#{sex},
+			#{birth}
+		)
+	</insert>
 </mapper>

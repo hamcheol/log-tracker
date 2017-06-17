@@ -1,5 +1,8 @@
 package com.rp.member.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Member {
 	private String mbrId;
 	private String name;
@@ -45,6 +48,11 @@ public class Member {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }
