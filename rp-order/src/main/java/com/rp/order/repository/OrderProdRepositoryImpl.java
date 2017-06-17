@@ -1,6 +1,6 @@
 package com.rp.order.repository;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ public class OrderProdRepositoryImpl implements OrderProdRepository {
 	private final String NAMESPACE = "com.easyshop.order.repository.OrderProdRepositoryImpl.";
 
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSessionTemplate sqlSession;
 
 	@Override
 	public int insertOrderProd(OrderProd orderProd) {

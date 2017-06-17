@@ -1,6 +1,6 @@
 package com.rp.order.repository;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
 	private final String NAMESPACE = "com.easyshop.order.repository.DeliveryRepositoryImpl.";
 
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSessionTemplate sqlSession;
 
 	@Override
 	public int insertDelivery(Delivery delivery) {
