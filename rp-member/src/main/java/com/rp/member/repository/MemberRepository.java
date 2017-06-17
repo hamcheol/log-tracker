@@ -7,6 +7,6 @@ import com.rp.member.model.Member;
 public interface MemberRepository {
 	public List<Member> selectMembers(Member member);
 	
-	public void addMember(Member member);
+	public void insertyMember(Member member);
 
 }
