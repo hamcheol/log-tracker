@@ -73,11 +73,11 @@ public class MemberRepositoryImplTest {
 		String yyyy = Integer.toString(RandomUtils.nextInt(1970, 2000));
 		String mm = Integer.toString(RandomUtils.nextInt(1, 12));
 		if(mm.length() == 1) {
-			mm += "0";
+			mm = "0" + mm;
 		}
 		String dd = Integer.toString(RandomUtils.nextInt(1, 30));
 		if(dd.length() == 1) {
-			dd += "0";
+			dd = "0" + dd;
 		}
 		return yyyy + mm + dd;
 	}
