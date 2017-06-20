@@ -11,7 +11,7 @@ import com.rp.order.model.OrderParam;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
-	private final String NAMESPACE = "com.easyshop.order.repository.OrderRepositoryImpl.";
+	private final String NAMESPACE = "com.rp.order.repository.OrderRepositoryImpl.";
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -29,5 +29,10 @@ public class OrderRepositoryImpl implements OrderRepository {
 	@Override
 	public List<Order> selectOrders(OrderParam param) {
 		return sqlSession.selectList(NAMESPACE + "selectOrders", param);
+	}
+
+	@Override
+	public List<Order> selectDetailOrders(OrderParam param) {
+		return sqlSession.selectList(NAMESPACE + "selectDetailOrders", param);
 	}
 }

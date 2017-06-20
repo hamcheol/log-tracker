@@ -11,5 +11,7 @@ public interface OrderRepository {
 	public int updateOrder(Order order);
 	
 	public List<Order> selectOrders(OrderParam param);
+	
+	public List<Order> selectDetailOrders(OrderParam param);
 
 }

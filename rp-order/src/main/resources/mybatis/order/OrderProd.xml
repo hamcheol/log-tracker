@@ -5,6 +5,7 @@
 		INSERT INTO es_order_prod (
 			ord_no,
 			seq,
+			prod_no,
 			prod_nm,
 			prod_amt,
 			ord_prod_cnt,
@@ -13,6 +14,7 @@
 		) values (
 			#{ordNo},
 			#{seq},
+			#{prodNo},
 			#{prodNm},
 			#{prodAmt},
 			#{ordProdCnt},

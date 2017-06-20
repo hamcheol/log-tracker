@@ -10,6 +10,7 @@ create table rp_order (
 create table rp_order_prod (
 	ord_no varchar(20) not null,
 	seq int(3) not null,
+	prod_no varchar(20) not null,
 	prod_nm varchar(100) not null,
 	prod_amt long,
 	ord_prod_cnt int(3),

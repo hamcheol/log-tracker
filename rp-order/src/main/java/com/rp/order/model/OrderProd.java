@@ -3,6 +3,7 @@ package com.rp.order.model;
 public class OrderProd {
 	private String ordNo;
 	private Integer seq;
+	private String prodNo;
 	private String prodNm;
 	private Long prodAmt;
 	private Integer ordProdCnt;
@@ -63,6 +64,14 @@ public class OrderProd {
 
 	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
+	}
+
+	public String getProdNo() {
+		return prodNo;
+	}
+
+	public void setProdNo(String prodNo) {
+		this.prodNo = prodNo;
 	}
 
 }
