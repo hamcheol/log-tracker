@@ -15,4 +15,13 @@
 			#{seller.id}
 		)
 	</insert>
+	
+	<select id="selectProducts" resultMap="selectProductsMap">
+		SELECT
+			id,
+			name,
+			price,
+			seller_id
+		FROM rp_product
+	</select>
 </mapper>

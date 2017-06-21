@@ -2,5 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.rp.seller.repository.SellerRepositoryImpl">
+	<insert id="insertSeller" parameterType="com.rp.seller.model.Seller">
+		INSERT INTO rp_seller (
+			id,
+			name
+		) values (
+			#{id},
+			#{name}
+		)
+	</insert>
+	
+	<select id="selectSellers" resultType="com.rp.seller.model.Seller">
+		SELECT
+			id,
+			name
+		FROM rp_seller
+	</select>
 
 </mapper>
