@@ -7,6 +7,6 @@ import com.rp.member.model.Member;
 public interface MemberService {
 	List<Member> getMembers(Member member);
 	
-	Member getMemberById(String mbrId);
+	Member getMemberById(String id);
 
 }

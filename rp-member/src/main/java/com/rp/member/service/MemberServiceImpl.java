@@ -20,11 +20,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.selectMembers(member);
 	}
 
-	@Cacheable(value="memberInfos", key="#mbrId", unless="#result == null")
+	@Cacheable(value="memberInfos", key="#id", unless="#result == null")
 	@Override
-	public Member getMemberById(String mbrId) {
+	public Member getMemberById(String id) {
 		Member sqlParam = new Member();
-		sqlParam.setMbrId(mbrId);
+		sqlParam.setId(id);
 		List<Member> members = memberRepository.selectMembers(sqlParam);
 		
 		if(members !=null && members.size() == 1) {

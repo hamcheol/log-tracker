@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rp.order.repository.OrderProdRepositoryImpl">
 	<insert id="insertOrderProd" parameterType="com.rp.order.model.OrderProd">
-		INSERT INTO es_order_prod (
+		INSERT INTO rp_order_prod (
 			ord_no,
 			seq,
 			prod_no,
@@ -24,7 +24,7 @@
 	</insert>
 	
 	<update id="updateOrderProd" parameterType="com.rp.order.model.OrderProd">
-		UPDATE es_order_prod
+		UPDATE rp_order_prod
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="prodNm != null">
 			prod_nm = #{prodNm},

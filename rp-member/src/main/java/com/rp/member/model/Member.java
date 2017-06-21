@@ -4,18 +4,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Member {
-	private String mbrId;
+	private String id;
 	private String name;
 	private String birth;
 	private String sex;
 	private String addr;
 
-	public String getMbrId() {
-		return mbrId;
+	public String getId() {
+		return id;
 	}
 
-	public void setMbrId(String mbrId) {
-		this.mbrId = mbrId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -34,6 +34,14 @@ public class Member {
 		this.birth = birth;
 	}
 
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	public String getAddr() {
 		return addr;
 	}
@@ -42,14 +50,6 @@ public class Member {
 		this.addr = addr;
 	}
 
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-	
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);

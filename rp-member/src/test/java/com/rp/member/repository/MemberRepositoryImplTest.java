@@ -39,7 +39,7 @@ public class MemberRepositoryImplTest {
 
 		for (int i = 0; i < 100; i++) {
 			Member member = new Member();
-			member.setMbrId(RandomStringUtils.random(RandomUtils.nextInt(8, 15), true, true));
+			member.setId(RandomStringUtils.random(RandomUtils.nextInt(8, 15), true, true));
 			member.setSex(i % 2 == 0 ? "F" : "M");
 			member.setAddr(getRandomAddr());
 			member.setName(getRandomName(i));

@@ -30,7 +30,7 @@ public class MemberCacheInitializer implements ApplicationListener<ApplicationRe
 		Cache memberInfos = cacheManager.getCache("memberInfos");
 		memberInfos.clear();
 		for(Member member : members) {
-			memberInfos.putIfAbsent(member.getMbrId(), member);
+			memberInfos.putIfAbsent(member.getId(), member);
 		}
 		logger.info("====================> Done onApplicationEvent");
 	}
