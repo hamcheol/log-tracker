@@ -1,12 +1,12 @@
 create table rp_seller (
-	id long not null,
+	id bigint auto_increment,
 	name varchar(100) not null,
 	
-	primary key (long)
+	primary key (id)
 );
 
 create table rp_product (
-	id long not null,
+	id bigint auto_increment,
 	name varchar(100) not null,
 	price long,
 	seller_id long not null,

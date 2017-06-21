@@ -16,7 +16,7 @@
 		)
 	</insert>
 	
-	<select id="selectProducts" resultMap="selectProductsMap">
+	<select id="selectProducts" resultType="com.rp.seller.model.Product">
 		SELECT
 			id,
 			name,
