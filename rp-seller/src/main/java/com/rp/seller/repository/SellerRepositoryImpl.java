@@ -21,7 +21,7 @@ public class SellerRepositoryImpl implements SellerRepository {
 	}
 
 	@Override
-	public List<Seller> selectSellers() {
-		return sqlSessionTemplate.selectList(NAMESPACE + "selectSellers");
+	public List<Seller> selectSellers(Seller sqlParam) {
+		return sqlSessionTemplate.selectList(NAMESPACE + "selectSellers", sqlParam);
 	}
 }

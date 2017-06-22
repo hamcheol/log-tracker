@@ -10,6 +10,7 @@ create table rp_product (
 	name varchar(100) not null,
 	price long,
 	seller_id long not null,
+	info text,
 	
 	primary key(id)
 );

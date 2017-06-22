@@ -8,20 +8,34 @@
 			name,
 			price,
 			seller_id,
+			info
 		) values (
 			#{id},
 			#{name},
 			#{price},
-			#{seller.id}
+			#{seller.id},
+			#{info}
 		)
 	</insert>
 	
-	<select id="selectProducts" resultType="com.rp.seller.model.Product">
+	<select id="selectProducts" parameterType="com.rp.seller.model.Product" resultType="com.rp.seller.model.Product">
 		SELECT
-			id,
-			name,
-			price,
-			seller_id
+			id as id,
+			name as name,
+			price as price,
+			seller_id as sellerId,
+			info as info
 		FROM rp_product
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+			AND id = #{id}
+			</if>
+			<if test="name != null">
+			AND name = #{name}
+			</if>
+			<if test="sellerId != null">
+			AND seller_id = #{sellerId}
+			</if>
+		</trim>
 	</select>
 </mapper>

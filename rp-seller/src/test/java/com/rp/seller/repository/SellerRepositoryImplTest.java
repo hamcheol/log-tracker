@@ -1,7 +1,12 @@
 package com.rp.seller.repository;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,23 +27,32 @@ public class SellerRepositoryImplTest {
 	@Autowired
 	private SellerRepository repository;
 
-	private final String DEFAULT_NAMES_STR = "채희향,표혜인,차여진,장지선,유주엽,우인수,차아담,왕선재,왕성혜,오율";
-	private final String[] DEFAULT_NAMES = DEFAULT_NAMES_STR.split(",");
-
 	private List<Seller> defaultSellers = new ArrayList<Seller>();
+	
+	private Set<String> sellerNameSet = new HashSet<>();
 
 	@Before
 	public void setDefaultSeller() {
-		for (int i = 0; i < 10; i++) {
+		try {
+			List<String> lines = Files.readAllLines(Paths.get("/Users/naver/git/log-tracker/rp-seller/sample_product.csv"));
+			for(String line : lines) {
+				String[] elements = line.split(",");
+				sellerNameSet.add(elements[2]);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (String name : sellerNameSet) {
 			Seller seller = new Seller();
-			seller.setId(i);
-			seller.setName(DEFAULT_NAMES[i]);
+			seller.setName(name);
 			defaultSellers.add(seller);
 		}
 	}
 	
 	@Test
 	public void addSellerTest() {
+		logger.info("seller count:" + defaultSellers.size());
 		for(Seller seller : defaultSellers) {
 			repository.insertSeller(seller);
 		}

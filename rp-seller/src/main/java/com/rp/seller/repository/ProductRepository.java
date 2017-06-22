@@ -7,6 +7,6 @@ import com.rp.seller.model.Product;
 public interface ProductRepository {
 	public void insertProduct(Product sqlParam);
 	
-	public List<Product> selectProducts();
+	public List<Product> selectProducts(Product sqlParam);
 
 }

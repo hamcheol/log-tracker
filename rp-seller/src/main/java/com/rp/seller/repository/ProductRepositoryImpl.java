@@ -21,8 +21,8 @@ public class ProductRepositoryImpl implements ProductRepository {
 	}
 
 	@Override
-	public List<Product> selectProducts() {
-		return sqlSessionTemplate.selectList(NAMESPACE + "selectProducts");
+	public List<Product> selectProducts(Product sqlParam) {
+		return sqlSessionTemplate.selectList(NAMESPACE + "selectProducts", sqlParam);
 	}
 
 }

@@ -1,16 +1,17 @@
 package com.rp.seller.model;
 
 public class Product {
-	private long id;
+	private Long id;
 	private String name;
 	private Long price;
+	private String info;
 	private Seller seller;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -36,6 +37,14 @@ public class Product {
 
 	public void setSeller(Seller seller) {
 		this.seller = seller;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 }

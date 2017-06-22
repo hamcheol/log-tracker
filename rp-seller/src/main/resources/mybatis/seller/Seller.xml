@@ -4,19 +4,25 @@
 <mapper namespace="com.rp.seller.repository.SellerRepositoryImpl">
 	<insert id="insertSeller" parameterType="com.rp.seller.model.Seller">
 		INSERT INTO rp_seller (
-			id,
 			name
 		) values (
-			#{id},
 			#{name}
 		)
 	</insert>
 	
-	<select id="selectSellers" resultType="com.rp.seller.model.Seller">
+	<select id="selectSellers" parameterType="com.rp.seller.model.Seller" resultType="com.rp.seller.model.Seller">
 		SELECT
 			id,
 			name
 		FROM rp_seller
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+			AND id = #{id}
+			</if>
+			<if test="name != null">
+			AND name = #{name}
+			</if>
+		</trim>
 	</select>
 
 </mapper>
