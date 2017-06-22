@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -42,24 +43,38 @@ public class ProductRepositoryImplTest {
 		if (sellers != null && sellers.size() == 1) {
 			return sellers.get(0);
 		}
-		throw new RuntimeException("입력한 이름의 아이디를 찾을수 없습니다.");
+		logger.info("입력한 이름({})의 아이디를 찾을수 없습니다.", name);
+		return null;
 	}
 
 	private List<Sample> getDatas() {
 		try {
 			List<String> lines = Files.readAllLines(Paths.get("/Users/naver/git/log-tracker/rp-seller/sample_product.csv"));
+			logger.info("line number:" + lines.size());
 			for (String line : lines) {
-				String[] elements = line.split(",");
+				line = line.replaceAll("\"", "").replaceAll("“", "").replaceAll("”", "");
 				Product product = new Product();
-				product.setPrice(RandomUtils.nextInt(100, 300) * 100L);
-				product.setName(elements[1].replaceAll("\"", "").replaceAll("“", "").replaceAll("”", ""));
-				product.setInfo(elements[3].replaceAll("\"", "").replaceAll("“", "").replaceAll("”", ""));
-				product.setSeller(getSeller(elements[2]));
-
+				String[] elements = line.split(",");
+				if(elements != null && elements.length >= 4) {
+					//logger.info("{}:{}:{}:{}",elements[0],elements[1],elements[2],elements[3]);
+					product.setPrice(RandomUtils.nextInt(100, 300) * 100L);
+					product.setName(elements[1]);
+					Seller seller = getSeller(elements[2]);
+					if(seller == null) continue;
+					product.setSeller(seller);
+					product.setInfo(elements[3]);
+				} else {
+					product.setPrice(RandomUtils.nextInt(100, 300) * 100L);
+					product.setName(elements[1]);
+					Seller seller = getSeller(elements[2]);
+					if(seller == null) continue;
+					product.setSeller(seller);
+					product.setInfo("....");
+				}
 				productRepository.insertProduct(product);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		return null;
