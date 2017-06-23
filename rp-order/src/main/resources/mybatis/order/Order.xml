@@ -7,6 +7,7 @@
 		<result column="mbr_id" property="mbrId"/>
 		<result column="ord_tot_amt" property="ordTotAmt"/>
 		<result column="ord_stat_cd" property="ordStatCd"/>
+		<result column="ord_ymdt" property="ordYmdt"/>
 		<association property="delivery" column="dlv_ord_no" javaType="com.rp.order.model.Delivery" resultMap="deliveryMap"/>
 		<collection property="orderProds" ofType="com.rp.order.model.OrderProd" resultMap="orderProdsMap"/>
 	</resultMap>
@@ -33,19 +34,20 @@
 			ord_no,
 			mbr_id,
 			ord_tot_amt,
-			ord_stat_cd
+			ord_stat_cd,
+			ord_ymdt
 		) values (
 			#{ordNo},
 			#{mbrId},
 			#{ordTotAmt},
-			#{ordStatCd}
+			#{ordStatCd},
+			#{ordYmdt}
 		)
 	</insert>
 	
 	<update id="updateOrder" parameterType="com.rp.order.model.Order">
 		UPDATE rp_order
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="mbrId != null">mbr_id = #{mbrId},</if>
 			<if test="ordTotAmt != null">ord_tot_amt = #{ordTotAmt},</if>
 			<if test="ordStatCd != null">ord_stat_cd = #{ordStatCd},</if>
 		</trim> 	
@@ -57,7 +59,8 @@
 			ord_no as ordNo,
 			mbr_id as mbrId,
 			ord_tot_amt as ordTotAmt,
-			ord_stat_cd as ordStatCd
+			ord_stat_cd as ordStatCd,
+			ord_ymdt as ordYmdt
 		FROM rp_order
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="mbrId != null">AND mbr_id = #{mbrId}</if>
@@ -73,6 +76,7 @@
 			o.mbr_id,
 			o.ord_tot_amt,
 			o.ord_stat_cd,
+			o.ord_ymdt,
 			op.ord_no as op_ord_no,
 			op.seq,
 			op.prod_no,

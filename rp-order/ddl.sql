@@ -1,8 +1,9 @@
 create table rp_order (
 	ord_no varchar(20) not null,
 	mbr_id varchar(20) not null,
-	ord_tot_amt long,
-	ord_stat_cd char(6),
+	ord_tot_amt long not null,
+	ord_stat_cd char(6) not null,
+	ord_ymdt varchar(14) not null,
 	
 	primary key (ord_no)
 );

@@ -10,6 +10,7 @@ public class Order {
 	private String mbrId;
 	private Long ordTotAmt;
 	private String ordStatCd;
+	private String ordYmdt;
 
 	private List<OrderProd> orderProds;
 	private Delivery delivery;
@@ -65,6 +66,14 @@ public class Order {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getOrdYmdt() {
+		return ordYmdt;
+	}
+
+	public void setOrdYmdt(String ordYmdt) {
+		this.ordYmdt = ordYmdt;
 	}
 
 }

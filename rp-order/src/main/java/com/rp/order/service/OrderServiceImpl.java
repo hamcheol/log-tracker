@@ -1,17 +1,20 @@
 package com.rp.order.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.rp.order.config.BizEnum;
 import com.rp.order.model.Delivery;
+import com.rp.order.model.Member;
 import com.rp.order.model.Order;
 import com.rp.order.model.OrderParam;
 import com.rp.order.model.OrderProd;
+import com.rp.order.model.Product;
 import com.rp.order.repository.DeliveryRepository;
 import com.rp.order.repository.OrderProdRepository;
 import com.rp.order.repository.OrderRepository;
@@ -31,31 +34,46 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional
 	@Override
-	public Order settle(Order order) {
+	public Order settle(Member member, List<Product> products) {
+		Order order = new Order();
 		String ordNo = BizUtils.generateOrdNo();
 		order.setOrdNo(ordNo);
+		order.setMbrId(member.getId());
+		order.setOrdYmdt(DateUtils.date("yyyyMMddHHmmss"));
 		order.setOrdStatCd(BizEnum.ORDER_STAT.결제완료.getCode());
 
-		List<OrderProd> orderProds = order.getOrderProds();
-		int orderProdSeq = 1;
+		int seq = 1;
+		Long ordTotAmt = 0L;
+		List<OrderProd> orderProds = new ArrayList<>();
+		for (Product product : products) {
+			OrderProd op = new OrderProd();
+			op.setOrdNo(ordNo);
+			op.setSeq(seq);
+			op.setProdNm(product.getName());
+			op.setProdNo(product.getId());
+			op.setProdAmt(product.getPrice());
+			op.setSellerId(product.getSeller().getId());
+			int ordProdCnt = RandomUtils.nextInt(1, 5);
+			op.setOrdProdCnt(ordProdCnt);
+			ordTotAmt += ordProdCnt * product.getPrice();
+			orderProds.add(op);
+			seq++;
+		}
+		order.setOrdTotAmt(ordTotAmt);
+		order.setOrderProds(orderProds);
+
+		Delivery delivery = new Delivery();
+		delivery.setOrdNo(ordNo);
+		delivery.setAddr(member.getAddr());
+		order.setDelivery(delivery);
+
 		for (OrderProd orderProd : orderProds) {
-			orderProd.setOrdNo(ordNo);
-			orderProd.setSeq(orderProdSeq++);
 			orderProdRepository.insertOrderProd(orderProd);
 		}
 
-		Long ordTotAmt = 0L;
-		if (!CollectionUtils.isEmpty(orderProds)) {
-			for (OrderProd orderProd : orderProds) {
-				ordTotAmt += (orderProd.getProdAmt() * orderProd.getOrdProdCnt());
-			}
-			order.setOrdTotAmt(ordTotAmt);
-		}
-		orderRepository.insertOrder(order);
-
-		Delivery delivery = order.getDelivery();
-		delivery.setOrdNo(ordNo);
 		delvRepository.insertDelivery(delivery);
+
+		orderRepository.insertOrder(order);
 
 		return order;
 	}

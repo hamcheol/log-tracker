@@ -14,25 +14,25 @@ public class OrderRepositoryImpl implements OrderRepository {
 	private final String NAMESPACE = "com.rp.order.repository.OrderRepositoryImpl.";
 
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
 	public int insertOrder(Order order) {
-		return sqlSession.insert(NAMESPACE + "insertOrder", order);
+		return sqlSessionTemplate.insert(NAMESPACE + "insertOrder", order);
 	}
 
 	@Override
 	public int updateOrder(Order order) {
-		return sqlSession.update(NAMESPACE + "updateOrder", order);
+		return sqlSessionTemplate.update(NAMESPACE + "updateOrder", order);
 	}
 
 	@Override
 	public List<Order> selectOrders(OrderParam param) {
-		return sqlSession.selectList(NAMESPACE + "selectOrders", param);
+		return sqlSessionTemplate.selectList(NAMESPACE + "selectOrders", param);
 	}
 
 	@Override
 	public List<Order> selectDetailOrders(OrderParam param) {
-		return sqlSession.selectList(NAMESPACE + "selectDetailOrders", param);
+		return sqlSessionTemplate.selectList(NAMESPACE + "selectDetailOrders", param);
 	}
 }

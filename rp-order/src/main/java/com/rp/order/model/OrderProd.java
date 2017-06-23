@@ -6,12 +6,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class OrderProd {
 	private String ordNo;
 	private Integer seq;
-	private String prodNo;
+	private Long prodNo;
 	private String prodNm;
 	private Long prodAmt;
 	private Integer ordProdCnt;
 	private String purchCfrmDt;
-	private String sellerId;
+	private Long sellerId;
 
 	public String getOrdNo() {
 		return ordNo;
@@ -61,19 +61,19 @@ public class OrderProd {
 		this.purchCfrmDt = purchCfrmDt;
 	}
 
-	public String getSellerId() {
+	public Long getSellerId() {
 		return sellerId;
 	}
 
-	public void setSellerId(String sellerId) {
+	public void setSellerId(Long sellerId) {
 		this.sellerId = sellerId;
 	}
 
-	public String getProdNo() {
+	public Long getProdNo() {
 		return prodNo;
 	}
 
-	public void setProdNo(String prodNo) {
+	public void setProdNo(Long prodNo) {
 		this.prodNo = prodNo;
 	}
 	

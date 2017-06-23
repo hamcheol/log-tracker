@@ -2,8 +2,10 @@ package com.rp.order.service;
 
 import java.util.List;
 
+import com.rp.order.model.Member;
 import com.rp.order.model.Order;
 import com.rp.order.model.OrderParam;
+import com.rp.order.model.Product;
 
 public interface OrderService {
 	/**
@@ -11,7 +13,7 @@ public interface OrderService {
 	 * @param order
 	 * @return
 	 */
-	public Order settle(Order order);
+	public Order settle(Member member, List<Product> products);
 	
 	/**
 	 * 배송중
