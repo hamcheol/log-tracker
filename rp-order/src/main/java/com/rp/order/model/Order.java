@@ -2,6 +2,9 @@ package com.rp.order.model;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Order {
 	private String ordNo;
 	private String mbrId;
@@ -57,6 +60,11 @@ public class Order {
 
 	public void setDelivery(Delivery delivery) {
 		this.delivery = delivery;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

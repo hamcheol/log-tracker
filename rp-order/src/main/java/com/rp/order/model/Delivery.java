@@ -1,5 +1,8 @@
 package com.rp.order.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Delivery {
 	private String ordNo;
 	private String addr;
@@ -27,6 +30,11 @@ public class Delivery {
 
 	public void setShpNo(String shpNo) {
 		this.shpNo = shpNo;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

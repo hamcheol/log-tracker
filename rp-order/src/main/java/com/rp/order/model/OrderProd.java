@@ -1,5 +1,8 @@
 package com.rp.order.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class OrderProd {
 	private String ordNo;
 	private Integer seq;
@@ -72,6 +75,11 @@ public class OrderProd {
 
 	public void setProdNo(String prodNo) {
 		this.prodNo = prodNo;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }
