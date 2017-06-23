@@ -1,6 +1,5 @@
 package com.rp.seller.repository;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rp.seller.model.Product;
 import com.rp.seller.model.Seller;
 
@@ -31,8 +31,7 @@ public class ProductRepositoryImplTest {
 
 	@Test
 	public void testAddProduct() {
-		getDatas();
-
+		makeDatas();
 	}
 
 	private Seller getSeller(String name) {
@@ -47,7 +46,7 @@ public class ProductRepositoryImplTest {
 		return null;
 	}
 
-	private List<Sample> getDatas() {
+	private void makeDatas() {
 		try {
 			List<String> lines = Files.readAllLines(Paths.get("/Users/naver/git/log-tracker/rp-seller/sample_product.csv"));
 			logger.info("line number:" + lines.size());
@@ -77,47 +76,16 @@ public class ProductRepositoryImplTest {
 			logger.error(ExceptionUtils.getStackTrace(e));
 		}
 
-		return null;
+	}
+	
+	@Test
+	public void testSelectData() {
+		List<Product> products = productRepository.selectProducts(null);
+		
+		for(Product one : products) {
+			logger.info(one.toString());
+		}
 	}
 
-	public class Sample {
-		private int no;
-		private String name;
-		private String seller;
-		private String desc;
-
-		public int getNo() {
-			return no;
-		}
-
-		public void setNo(int no) {
-			this.no = no;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getSeller() {
-			return seller;
-		}
-
-		public void setSeller(String seller) {
-			this.seller = seller;
-		}
-
-		public String getDesc() {
-			return desc;
-		}
-
-		public void setDesc(String desc) {
-			this.desc = desc;
-		}
-
-	}
 
 }

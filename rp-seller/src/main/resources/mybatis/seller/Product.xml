@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.rp.seller.repository.ProductRepositoryImpl">
+	<resultMap id="productMap" type="com.rp.seller.model.Product">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="info" property="info"/>
+		<association property="seller" javaType="com.rp.seller.model.Seller" resultMap="sellerMap"/>
+	</resultMap>
+	
+	<resultMap id="sellerMap" type="com.rp.seller.model.Seller">
+		<id column="sellerId" property="id"/>
+		<result column="sellerNm" property="name"/>
+	</resultMap>
+	
 	<insert id="insertProduct" parameterType="com.rp.seller.model.Product">
 		INSERT INTO rp_product (
 			id,
@@ -18,24 +31,24 @@
 		)
 	</insert>
 	
-	<select id="selectProducts" parameterType="com.rp.seller.model.Product" resultType="com.rp.seller.model.Product">
+	<select id="selectProducts" parameterType="com.rp.seller.model.Product" resultMap="productMap">
 		SELECT
-			id as id,
-			name as name,
-			price as price,
-			seller_id as sellerId,
-			info as info
-		FROM rp_product
-		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="id != null">
-			AND id = #{id}
-			</if>
-			<if test="name != null">
-			AND name = #{name}
-			</if>
-			<if test="sellerId != null">
-			AND seller_id = #{sellerId}
-			</if>
-		</trim>
+			p.id as id,
+			p.name as name,
+			p.price as price,
+			p.seller_id as sellerId,
+			p.info as info,
+			s.name as sellerNm
+		FROM rp_product p, rp_seller s
+		WHERE p.seller_id = s.id
+		<if test="id != null">
+			AND p.id = #{id}
+		</if>
+		<if test="name != null">
+			AND p.name = #{name}
+		</if>
+		<if test="sellerId != null">
+			AND s.id = #{sellerId}
+		</if>
 	</select>
 </mapper>

@@ -1,5 +1,8 @@
 package com.rp.seller.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Product {
 	private Long id;
 	private String name;
@@ -45,6 +48,11 @@ public class Product {
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }
