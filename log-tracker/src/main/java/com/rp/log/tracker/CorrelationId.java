@@ -8,7 +8,7 @@ public class CorrelationId {
 
 	public static void setId(String id) {
 		XCorrelationIdThreadLocal.set(id);
-		MDC.put("X-Correlation-ID", id);
+		MDC.put(CORRELATION_ID_NAME, id);
 	}
 
 	public static String getId() {

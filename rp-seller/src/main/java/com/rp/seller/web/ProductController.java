@@ -3,6 +3,8 @@ package com.rp.seller.web;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import com.rp.seller.service.ProductService;
 
 @RestController
 public class ProductController {
+	private Logger trackingLogger = LoggerFactory.getLogger("log-tracker");
+	
 	@Autowired
 	private ProductService productService;
 
@@ -47,6 +51,7 @@ public class ProductController {
 		List<Product> randomProducts = Lists.newArrayList();
 		List<Product> products = productService.getProducts(null);
 		int prdCnt = RandomUtils.nextInt(1, 6);
+		trackingLogger.info("Products count : {}", prdCnt);
 		for (int i = 0; i < prdCnt; i++) {
 			int _idx = RandomUtils.nextInt(1, products.size());
 			randomProducts.add(products.get(_idx));

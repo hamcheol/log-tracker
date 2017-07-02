@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,8 @@ import com.rp.member.service.MemberService;
 
 @RestController
 public class MemberController {
+	private Logger trackingLogger = LoggerFactory.getLogger("log-tracker");
+	
 	@Autowired
 	private MemberService memberService;
 
@@ -29,7 +33,9 @@ public class MemberController {
 
 		if (CollectionUtils.isNotEmpty(members)) {
 			int randomIdx = RandomUtils.nextInt(0, members.size() - 1);
-			return members.get(randomIdx);
+			Member member = members.get(randomIdx);
+			trackingLogger.info("Selected member : {}", member.getName());
+			return member;
 		}
 		return null;
 	}

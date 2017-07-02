@@ -25,6 +25,9 @@ import com.rp.order.utils.DateUtils;
 public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private ESOrderService esOrderService;
 
 	@Autowired
 	private OrderProdRepository orderProdRepository;
@@ -74,6 +77,8 @@ public class OrderServiceImpl implements OrderService {
 		delvRepository.insertDelivery(delivery);
 
 		orderRepository.insertOrder(order);
+		
+		esOrderService.save(order);
 
 		return order;
 	}

@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+	<property name="application_name" value="rp-member" />
+	
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss}[%-5p][%F]%M\(%L\) : %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>localhost:4560</destination>
+		<connectionStrategy>
+			<preferPrimary>
+				<secondaryConnectionTTL>5 minutes</secondaryConnectionTTL>
+			</preferPrimary>
+		</connectionStrategy>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+		  <providers>
+			  <timestamp/>
+			  <logLevel/>
+			  <pattern>
+				  <pattern>
+				        {
+				        "service": "${application_name}",
+				        "correlation-id": "%mdc{X-Correlation-ID}",
+				        "message": "%message"
+				        }
+				  </pattern>
+			  </pattern>
+		  </providers>
 		</encoder>
 	</appender>
 	
@@ -14,6 +40,11 @@
 		<appender-ref ref="console" />
 	</logger>
 	
+	<logger name="log-tracker" additivity="false">
+		<appender-ref ref="console"/>
+		<appender-ref ref="stash" />
+	</logger>
+		
 	<root level="INFO">
 		<appender-ref ref="console" />
 	</root>

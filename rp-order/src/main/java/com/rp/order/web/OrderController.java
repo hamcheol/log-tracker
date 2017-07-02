@@ -2,6 +2,8 @@ package com.rp.order.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -25,6 +27,8 @@ import com.rp.order.service.OrderService;
  */
 @RestController
 public class OrderController {
+	private Logger trackingLogger = LoggerFactory.getLogger("log-tracker");
+	
 	@Autowired
 	private OrderService orderService;
 
@@ -33,12 +37,16 @@ public class OrderController {
 
 	@RequestMapping(value = "/settle")
 	public Order settle() {
+		trackingLogger.info("Settlement begin....");
 		Member member = restTemplate.getForObject("http://localhost:8080/member/random", Member.class);
+		trackingLogger.info("Got member info.");
 		ResponseEntity<List<Product>> responseEntity = restTemplate.exchange("http://localhost:8090/product/random",
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
 				});
 		List<Product> products = responseEntity.getBody();
+		trackingLogger.info("Got products info.");
 		Order result = orderService.settle(member, products);
+		trackingLogger.info(result.toString());
 		return result;
 	}
 
