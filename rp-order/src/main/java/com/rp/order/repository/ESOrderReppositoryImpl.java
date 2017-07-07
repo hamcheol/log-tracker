@@ -1,32 +1,23 @@
 package com.rp.order.repository;
 
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rp.order.model.Order;
 
 @Repository
 public class ESOrderReppositoryImpl implements ESOrderReppository {
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public void save(TransportClient client, Order order) {
-		// TODO Auto-generated method stub
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			byte[] json = mapper.writeValueAsBytes(order);
-
-			IndexResponse response = client.prepareIndex("data-store", "order", order.getOrdNo())
-					.setSource(json)
-			    .get();
-			
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	public void save(TransportClient client, XContentBuilder builder, String id) {
+		IndexRequestBuilder indexRequestBuilder = client.prepareIndex("data-store", "order", id);
+		IndexResponse response = indexRequestBuilder.setSource(builder).execute().actionGet();
+		logger.info(response.getResult().name());
+		client.close();
 	}
 
 }

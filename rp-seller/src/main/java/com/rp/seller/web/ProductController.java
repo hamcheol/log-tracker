@@ -18,7 +18,7 @@ import com.rp.seller.service.ProductService;
 
 @RestController
 public class ProductController {
-	private Logger trackingLogger = LoggerFactory.getLogger("log-tracker");
+	private Logger logger = LoggerFactory.getLogger("log-tracker");
 	
 	@Autowired
 	private ProductService productService;
@@ -51,7 +51,7 @@ public class ProductController {
 		List<Product> randomProducts = Lists.newArrayList();
 		List<Product> products = productService.getProducts(null);
 		int prdCnt = RandomUtils.nextInt(1, 6);
-		trackingLogger.info("Products count : {}", prdCnt);
+		logger.info("Products count : {}", prdCnt);
 		for (int i = 0; i < prdCnt; i++) {
 			int _idx = RandomUtils.nextInt(1, products.size());
 			randomProducts.add(products.get(_idx));

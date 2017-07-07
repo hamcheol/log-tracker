@@ -1,11 +1,10 @@
 package com.rp.order.repository;
 
 import org.elasticsearch.client.transport.TransportClient;
-
-import com.rp.order.model.Order;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 
 public interface ESOrderReppository {
 
-	void save(TransportClient client, Order order);
+	void save(TransportClient client, XContentBuilder builder, String id);
 
 }
